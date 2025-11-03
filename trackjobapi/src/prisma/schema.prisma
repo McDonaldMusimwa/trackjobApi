@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+  engineType = "library"
+  moduleFormat="esm"
+  dataProxy = false
+  previewFeatures = []
+  // force CJS
+  jsEngine = "node-api"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  name          String?
+  password      String?   
+  provider      String?   
+  providerid    String?   
+  avatar        String?
+  emailVerified Boolean   @default(false)
+
+  jobs          Job[]
+  profile       Profile?
+
+  createdat     DateTime  @default(now())
+  updatedat     DateTime?  @updatedAt
+}
+
+model Profile {
+  id     Int   @id @default(autoincrement())
+  bio    String?
+  user   User  @relation(fields: [userid], references: [id])
+  userid Int   @unique
+}
+
+enum JobStatus {
+  APPLIED
+  INTERVIEWING
+  PENDING
+  OFFER
+  REJECTED
+  SAVED
+}
+
+model Job {
+  id          Int      @id @default(autoincrement())
+  createdat   DateTime @default(now())
+  updatedat   DateTime @updatedAt
+  companyname String
+  status      JobStatus
+  jobtitle    String
+  joblink     String
+  comments    String?
+  published   Boolean  @default(false)
+
+  author      User     @relation(fields: [authorid], references: [id])
+  authorid    Int
+}
