@@ -4,22 +4,26 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build":"npx tsc",
+    "build": "npx tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx tsc  && node dist/index.js",
     "dev": "nodemon",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:test": "node --loader ts-node/esm src/queries.ts"
+    "prisma:seed": "tsx prisma/seed.ts",
+    "prisma:test": "node --loader ts-node/esm src/queries.ts",
+    "postbuild": "node scripts/copy-prisma-client.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/adapter-better-sqlite3": "^6.19.0",
     "@prisma/client": "^6.18.0",
     "@prisma/extension-accelerate": "^2.0.2",
     "@types/cors": "^2.8.19",
+    "better-sqlite3": "^12.4.1",
     "cors": "^2.8.5",
     "express": "^5.1.0"
   },
@@ -27,10 +31,16 @@
     "@tsconfig/node20": "^20.1.6",
     "@types/express": "^5.0.5",
     "@types/node": "^24.9.2",
+    "node-gyp": "^12.1.0",
     "nodemon": "^3.1.10",
     "prisma": "^6.18.0",
+    "python": "^0.0.4",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
+  },
+  "prisma": {
+    "schema": "src/prisma/schema.prisma",
+    "seed": "prisma/seed.ts"
   }
 }

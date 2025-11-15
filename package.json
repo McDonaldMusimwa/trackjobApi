@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@tanstack/react-router": "^1.135.2"
+  },
+ "scripts": {
+    "client": "npm run dev --prefix client",
+    "api": "npm run dev --prefix trackjobapi",
+    "dev": "concurrently \"npm run client\" \"npm run api\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

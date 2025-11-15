@@ -1,0 +1,76 @@
+/* General Page Layout */
+.howitworkscontainer {
+  background-color: #ffffff;
+  color: #333333;
+  padding: 3rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-family: "Inter", sans-serif;
+}
+
+/* Header */
+.howitworksheader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.howitworksheader h1 {
+  font-size: 2.4rem;
+  color: #222222;
+  margin-bottom: 0.5rem;
+}
+
+.howitworksheader p {
+  color: #555555;
+  font-size: 1.1rem;
+}
+
+/* Section Styling */
+.howitworkssection {
+  margin-bottom: 2.5rem;
+  border-left: 4px solid #4f772d;
+  padding-left: 1.2rem;
+}
+
+.howitworkssection h2 {
+  color: #008c99;
+  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+}
+
+.howitworkssection p {
+  color: #444444;
+  font-size: 1rem;
+}
+
+/* CTA Section */
+.howitworkscta {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 2rem 1rem;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.howitworkscta h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #222222;
+}
+
+.ctabutton {
+  background-color: #000000;
+  color: white;
+  font-size: 1rem;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ctabutton:hover {
+  background-color: #00727e;
+}

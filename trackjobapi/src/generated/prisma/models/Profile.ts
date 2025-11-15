@@ -27,60 +27,60 @@ export type AggregateProfile = {
 
 export type ProfileAvgAggregateOutputType = {
   id: number | null
-  userid: number | null
+  userId: number | null
 }
 
 export type ProfileSumAggregateOutputType = {
   id: number | null
-  userid: number | null
+  userId: number | null
 }
 
 export type ProfileMinAggregateOutputType = {
   id: number | null
   bio: string | null
-  userid: number | null
+  userId: number | null
 }
 
 export type ProfileMaxAggregateOutputType = {
   id: number | null
   bio: string | null
-  userid: number | null
+  userId: number | null
 }
 
 export type ProfileCountAggregateOutputType = {
   id: number
   bio: number
-  userid: number
+  userId: number
   _all: number
 }
 
 
 export type ProfileAvgAggregateInputType = {
   id?: true
-  userid?: true
+  userId?: true
 }
 
 export type ProfileSumAggregateInputType = {
   id?: true
-  userid?: true
+  userId?: true
 }
 
 export type ProfileMinAggregateInputType = {
   id?: true
   bio?: true
-  userid?: true
+  userId?: true
 }
 
 export type ProfileMaxAggregateInputType = {
   id?: true
   bio?: true
-  userid?: true
+  userId?: true
 }
 
 export type ProfileCountAggregateInputType = {
   id?: true
   bio?: true
-  userid?: true
+  userId?: true
   _all?: true
 }
 
@@ -173,7 +173,7 @@ export type ProfileGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type ProfileGroupByOutputType = {
   id: number
   bio: string | null
-  userid: number
+  userId: number
   _count: ProfileCountAggregateOutputType | null
   _avg: ProfileAvgAggregateOutputType | null
   _sum: ProfileSumAggregateOutputType | null
@@ -202,31 +202,31 @@ export type ProfileWhereInput = {
   NOT?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[]
   id?: Prisma.IntFilter<"Profile"> | number
   bio?: Prisma.StringNullableFilter<"Profile"> | string | null
-  userid?: Prisma.IntFilter<"Profile"> | number
+  userId?: Prisma.IntFilter<"Profile"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type ProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
-  userid?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type ProfileWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  userid?: number
+  userId?: number
   AND?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[]
   OR?: Prisma.ProfileWhereInput[]
   NOT?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[]
   bio?: Prisma.StringNullableFilter<"Profile"> | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "userid">
+}, "id" | "userId">
 
 export type ProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   bio?: Prisma.SortOrderInput | Prisma.SortOrder
-  userid?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   _count?: Prisma.ProfileCountOrderByAggregateInput
   _avg?: Prisma.ProfileAvgOrderByAggregateInput
   _max?: Prisma.ProfileMaxOrderByAggregateInput
@@ -240,7 +240,7 @@ export type ProfileScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ProfileScalarWhereWithAggregatesInput | Prisma.ProfileScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Profile"> | number
   bio?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
-  userid?: Prisma.IntWithAggregatesFilter<"Profile"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"Profile"> | number
 }
 
 export type ProfileCreateInput = {
@@ -251,7 +251,7 @@ export type ProfileCreateInput = {
 export type ProfileUncheckedCreateInput = {
   id?: number
   bio?: string | null
-  userid: number
+  userId: number
 }
 
 export type ProfileUpdateInput = {
@@ -262,13 +262,13 @@ export type ProfileUpdateInput = {
 export type ProfileUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userid?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileCreateManyInput = {
   id?: number
   bio?: string | null
-  userid: number
+  userId: number
 }
 
 export type ProfileUpdateManyMutationInput = {
@@ -278,7 +278,7 @@ export type ProfileUpdateManyMutationInput = {
 export type ProfileUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  userid?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ProfileNullableScalarRelationFilter = {
@@ -289,29 +289,29 @@ export type ProfileNullableScalarRelationFilter = {
 export type ProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   bio?: Prisma.SortOrder
-  userid?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type ProfileAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userid?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type ProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   bio?: Prisma.SortOrder
-  userid?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type ProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   bio?: Prisma.SortOrder
-  userid?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type ProfileSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userid?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type ProfileCreateNestedOneWithoutUserInput = {
@@ -385,31 +385,31 @@ export type ProfileUncheckedUpdateWithoutUserInput = {
 export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   bio?: boolean
-  userid?: boolean
+  userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profile"]>
 
 export type ProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   bio?: boolean
-  userid?: boolean
+  userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profile"]>
 
 export type ProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   bio?: boolean
-  userid?: boolean
+  userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profile"]>
 
 export type ProfileSelectScalar = {
   id?: boolean
   bio?: boolean
-  userid?: boolean
+  userId?: boolean
 }
 
-export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bio" | "userid", ExtArgs["result"]["profile"]>
+export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "bio" | "userId", ExtArgs["result"]["profile"]>
 export type ProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -428,7 +428,7 @@ export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     bio: string | null
-    userid: number
+    userId: number
   }, ExtArgs["result"]["profile"]>
   composites: {}
 }
@@ -855,7 +855,7 @@ export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends runtime.
 export interface ProfileFieldRefs {
   readonly id: Prisma.FieldRef<"Profile", 'Int'>
   readonly bio: Prisma.FieldRef<"Profile", 'String'>
-  readonly userid: Prisma.FieldRef<"Profile", 'Int'>
+  readonly userId: Prisma.FieldRef<"Profile", 'Int'>
 }
     
 
@@ -1085,7 +1085,6 @@ export type ProfileCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many Profiles.
    */
   data: Prisma.ProfileCreateManyInput | Prisma.ProfileCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1104,7 +1103,6 @@ export type ProfileCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many Profiles.
    */
   data: Prisma.ProfileCreateManyInput | Prisma.ProfileCreateManyInput[]
-  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
