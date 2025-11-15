@@ -116,7 +116,7 @@ export interface Note {
   content: string
   createdAt: string
   updatedAt: string
-
+  category: 'job-search' | 'interview-prep' | 'networking' | 'skills' | 'reflection' | 'other'
   user?: User
   job?: Job | null
 }

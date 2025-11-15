@@ -110,3 +110,12 @@ export const navlinks:Array<LOGGEDROUTES> =[
     id:7
     },
 ]
+
+export const CATEGORIES = [
+  { value: 'job-search', label: 'Job Search', color: 'bg-blue-100 text-blue-800' },
+  { value: 'interview-prep', label: 'Interview Prep', color: 'bg-purple-100 text-purple-800' },
+  { value: 'networking', label: 'Networking', color: 'bg-green-100 text-green-800' },
+  { value: 'skills', label: 'Skills & Learning', color: 'bg-orange-100 text-orange-800' },
+  { value: 'reflection', label: 'Reflection', color: 'bg-pink-100 text-pink-800' },
+  { value: 'other', label: 'Other', color: 'bg-gray-100 text-gray-800' },
+]
