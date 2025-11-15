@@ -92,21 +92,21 @@ export const navlinks:Array<LOGGEDROUTES> =[
     },
    
     {
-        link:"app/addapplication",
-        name:"Add App",
-        icon:FilePlus,
-        id:6
+    link:"/app/addapplication",
+    name:"Add Application",
+    icon:FilePlus,
+    id:5
     }
     ,{
-        link:"app/jobleads",
-        name:"Job Leads",
-        icon:FilePlus,
-        id:6
+    link:"/app/jobleads",
+    name:"Job Leads",
+    icon:FilePlus,
+    id:6
     },
      {
         link:"/app/settings",
         name:"Settings",
         icon:Settings,
-        id:5
+    id:7
     },
 ]

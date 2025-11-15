@@ -16,11 +16,13 @@ import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app/index'
+import { Route as AppUploadRouteImport } from './routes/app/upload'
 import { Route as AppSettingsRouteImport } from './routes/app/settings'
 import { Route as AppNotesRouteImport } from './routes/app/notes'
 import { Route as AppJobsleadsRouteImport } from './routes/app/jobsleads'
 import { Route as AppInterviewsRouteImport } from './routes/app/interviews'
 import { Route as AppApplicationsRouteImport } from './routes/app/applications'
+import { Route as AppApplicationRouteImport } from './routes/app/application'
 import { Route as AppAddapplicationRouteImport } from './routes/app/addapplication'
 
 const SignUpRoute = SignUpRouteImport.update({
@@ -58,6 +60,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/app/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppUploadRoute = AppUploadRouteImport.update({
+  id: '/app/upload',
+  path: '/app/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppSettingsRoute = AppSettingsRouteImport.update({
   id: '/app/settings',
   path: '/app/settings',
@@ -83,6 +90,11 @@ const AppApplicationsRoute = AppApplicationsRouteImport.update({
   path: '/app/applications',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppApplicationRoute = AppApplicationRouteImport.update({
+  id: '/app/application',
+  path: '/app/application',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppAddapplicationRoute = AppAddapplicationRouteImport.update({
   id: '/app/addapplication',
   path: '/app/addapplication',
@@ -97,11 +109,13 @@ export interface FileRoutesByFullPath {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/app/addapplication': typeof AppAddapplicationRoute
+  '/app/application': typeof AppApplicationRoute
   '/app/applications': typeof AppApplicationsRoute
   '/app/interviews': typeof AppInterviewsRoute
   '/app/jobsleads': typeof AppJobsleadsRoute
   '/app/notes': typeof AppNotesRoute
   '/app/settings': typeof AppSettingsRoute
+  '/app/upload': typeof AppUploadRoute
   '/app': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
@@ -112,11 +126,13 @@ export interface FileRoutesByTo {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/app/addapplication': typeof AppAddapplicationRoute
+  '/app/application': typeof AppApplicationRoute
   '/app/applications': typeof AppApplicationsRoute
   '/app/interviews': typeof AppInterviewsRoute
   '/app/jobsleads': typeof AppJobsleadsRoute
   '/app/notes': typeof AppNotesRoute
   '/app/settings': typeof AppSettingsRoute
+  '/app/upload': typeof AppUploadRoute
   '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
@@ -128,11 +144,13 @@ export interface FileRoutesById {
   '/sign-in': typeof SignInRoute
   '/sign-up': typeof SignUpRoute
   '/app/addapplication': typeof AppAddapplicationRoute
+  '/app/application': typeof AppApplicationRoute
   '/app/applications': typeof AppApplicationsRoute
   '/app/interviews': typeof AppInterviewsRoute
   '/app/jobsleads': typeof AppJobsleadsRoute
   '/app/notes': typeof AppNotesRoute
   '/app/settings': typeof AppSettingsRoute
+  '/app/upload': typeof AppUploadRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
@@ -145,11 +163,13 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/app/addapplication'
+    | '/app/application'
     | '/app/applications'
     | '/app/interviews'
     | '/app/jobsleads'
     | '/app/notes'
     | '/app/settings'
+    | '/app/upload'
     | '/app'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -160,11 +180,13 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/app/addapplication'
+    | '/app/application'
     | '/app/applications'
     | '/app/interviews'
     | '/app/jobsleads'
     | '/app/notes'
     | '/app/settings'
+    | '/app/upload'
     | '/app'
   id:
     | '__root__'
@@ -175,11 +197,13 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/app/addapplication'
+    | '/app/application'
     | '/app/applications'
     | '/app/interviews'
     | '/app/jobsleads'
     | '/app/notes'
     | '/app/settings'
+    | '/app/upload'
     | '/app/'
   fileRoutesById: FileRoutesById
 }
@@ -191,11 +215,13 @@ export interface RootRouteChildren {
   SignInRoute: typeof SignInRoute
   SignUpRoute: typeof SignUpRoute
   AppAddapplicationRoute: typeof AppAddapplicationRoute
+  AppApplicationRoute: typeof AppApplicationRoute
   AppApplicationsRoute: typeof AppApplicationsRoute
   AppInterviewsRoute: typeof AppInterviewsRoute
   AppJobsleadsRoute: typeof AppJobsleadsRoute
   AppNotesRoute: typeof AppNotesRoute
   AppSettingsRoute: typeof AppSettingsRoute
+  AppUploadRoute: typeof AppUploadRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
@@ -250,6 +276,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/upload': {
+      id: '/app/upload'
+      path: '/app/upload'
+      fullPath: '/app/upload'
+      preLoaderRoute: typeof AppUploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/app/settings': {
       id: '/app/settings'
       path: '/app/settings'
@@ -285,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppApplicationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app/application': {
+      id: '/app/application'
+      path: '/app/application'
+      fullPath: '/app/application'
+      preLoaderRoute: typeof AppApplicationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/app/addapplication': {
       id: '/app/addapplication'
       path: '/app/addapplication'
@@ -303,11 +343,13 @@ const rootRouteChildren: RootRouteChildren = {
   SignInRoute: SignInRoute,
   SignUpRoute: SignUpRoute,
   AppAddapplicationRoute: AppAddapplicationRoute,
+  AppApplicationRoute: AppApplicationRoute,
   AppApplicationsRoute: AppApplicationsRoute,
   AppInterviewsRoute: AppInterviewsRoute,
   AppJobsleadsRoute: AppJobsleadsRoute,
   AppNotesRoute: AppNotesRoute,
   AppSettingsRoute: AppSettingsRoute,
+  AppUploadRoute: AppUploadRoute,
   AppIndexRoute: AppIndexRoute,
 }
 export const routeTree = rootRouteImport
