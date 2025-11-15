@@ -40,15 +40,15 @@ export const AnyNull = runtime.objectEnumValues.instances.AnyNull;
 export const ModelName = {
     User: 'User',
     Profile: 'Profile',
-    Job: 'Job'
+    Job: 'Job',
+    Application: 'Application',
+    Interview: 'Interview',
+    Note: 'Note'
 };
 /*
  * Enums
  */
 export const TransactionIsolationLevel = runtime.makeStrictEnum({
-    ReadUncommitted: 'ReadUncommitted',
-    ReadCommitted: 'ReadCommitted',
-    RepeatableRead: 'RepeatableRead',
     Serializable: 'Serializable'
 });
 export const UserScalarFieldEnum = {
@@ -57,36 +57,66 @@ export const UserScalarFieldEnum = {
     name: 'name',
     password: 'password',
     provider: 'provider',
-    providerid: 'providerid',
+    providerId: 'providerId',
     avatar: 'avatar',
     emailVerified: 'emailVerified',
-    createdat: 'createdat',
-    updatedat: 'updatedat'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
 };
 export const ProfileScalarFieldEnum = {
     id: 'id',
     bio: 'bio',
-    userid: 'userid'
+    userId: 'userId'
 };
 export const JobScalarFieldEnum = {
     id: 'id',
-    createdat: 'createdat',
-    updatedat: 'updatedat',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
     companyname: 'companyname',
     status: 'status',
     jobtitle: 'jobtitle',
     joblink: 'joblink',
     comments: 'comments',
     published: 'published',
-    authorid: 'authorid'
+    authorId: 'authorId'
+};
+export const ApplicationScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    jobId: 'jobId',
+    appliedDate: 'appliedDate',
+    status: 'status',
+    coverLetter: 'coverLetter',
+    resume: 'resume',
+    notes: 'notes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const InterviewScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    jobId: 'jobId',
+    interviewDate: 'interviewDate',
+    interviewType: 'interviewType',
+    interviewer: 'interviewer',
+    notes: 'notes',
+    feedback: 'feedback',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const NoteScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    jobId: 'jobId',
+    title: 'title',
+    content: 'content',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
 };
 export const SortOrder = {
     asc: 'asc',
     desc: 'desc'
-};
-export const QueryMode = {
-    default: 'default',
-    insensitive: 'insensitive'
 };
 export const NullsOrder = {
     first: 'first',

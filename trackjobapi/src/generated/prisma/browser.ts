@@ -31,3 +31,18 @@ export type Profile = Prisma.ProfileModel
  * 
  */
 export type Job = Prisma.JobModel
+/**
+ * Model Application
+ * 
+ */
+export type Application = Prisma.ApplicationModel
+/**
+ * Model Interview
+ * 
+ */
+export type Interview = Prisma.InterviewModel
+/**
+ * Model Note
+ * 
+ */
+export type Note = Prisma.NoteModel

@@ -16,7 +16,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 model User {
@@ -25,22 +25,24 @@ model User {
   name          String?
   password      String?   
   provider      String?   
-  providerid    String?   
+  providerId    String?   
   avatar        String?
   emailVerified Boolean   @default(false)
 
   jobs          Job[]
   profile       Profile?
-
-  createdat     DateTime  @default(now())
-  updatedat     DateTime?  @updatedAt
+  applications  Application[]
+  interviews    Interview[]
+  notes         Note[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime?  @updatedAt
 }
 
 model Profile {
   id     Int   @id @default(autoincrement())
   bio    String?
-  user   User  @relation(fields: [userid], references: [id])
-  userid Int   @unique
+  user   User  @relation(fields: [userId], references: [id])
+  userId Int   @unique
 }
 
 enum JobStatus {
@@ -54,15 +56,61 @@ enum JobStatus {
 
 model Job {
   id          Int      @id @default(autoincrement())
-  createdat   DateTime @default(now())
-  updatedat   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   companyname String
-  status      JobStatus
+  status      JobStatus @default(APPLIED)
   jobtitle    String
   joblink     String
   comments    String?
   published   Boolean  @default(false)
 
-  author      User     @relation(fields: [authorid], references: [id])
-  authorid    Int
+  author       User?       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId     Int?
+  applications Application[]
+  interviews   Interview[]
+  notes        Note[]
+}
+
+model Application {
+  id            Int       @id @default(autoincrement())
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+  job           Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  jobId         Int
+  appliedDate   DateTime  @default(now())
+  status        JobStatus @default(APPLIED)
+  coverLetter   String?
+  resume        String?
+  notes         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Interview {
+  id            Int       @id @default(autoincrement())
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+  job           Job?      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  jobId         Int?
+  interviewDate DateTime
+  interviewType String?   // e.g., "Phone", "Video", "In-person"
+  interviewer   String?
+  notes         String?
+  feedback      String?
+  status        String?   // e.g., "Scheduled", "Completed", "Cancelled"
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Note {
+  id            Int       @id @default(autoincrement())
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+  job           Job?      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  jobId         Int?
+  title         String
+  content       String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
