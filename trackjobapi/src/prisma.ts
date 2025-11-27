@@ -1,5 +1,5 @@
 import { PrismaClient } from './generated/prisma/client.js';
-import { PrismaBetterSQLite3 } from '@prisma/adapter-better-sqlite3';
+import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
 import 'dotenv/config';
 import path from 'path';
 
@@ -7,7 +7,7 @@ import path from 'path';
 const fallbackDbPath = path.join(process.cwd(), 'src', 'prisma', 'dev.db');
 const dbUrl = process.env.DATABASE_URL ?? `file:${fallbackDbPath}`;
 
-const adapter = new PrismaBetterSQLite3({
+const adapter = new PrismaBetterSqlite3({
   url: dbUrl,
 }, {
   timestampFormat: 'unixepoch-ms'

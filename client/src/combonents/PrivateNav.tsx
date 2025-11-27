@@ -33,7 +33,7 @@ export default function PrivateNav(): JSX.Element {
                             <Link
                                 key={link.id}
                                 to={link.link}
-                                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
+                                className="flex items-center gap-2 px-2 py-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
                                 activeProps={{
                                     className:
                                         'flex items-center gap-3 px-4 py-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',

@@ -47,7 +47,7 @@ const jobController = {
         try {
             const { authorId } = req.params;
             const jobs = await prisma.job.findMany({
-                where: { authorId: parseInt(authorId) },
+                where: { authorId: authorId },
                 include: {
                     author: true,
                     applications: true,
@@ -63,7 +63,9 @@ const jobController = {
 
     // Create new job
     createJob: async (req: Request, res: Response) => {
+        console.log('Request body:', req.body); // Debugging line
         try {
+            /*
             const { companyname, jobtitle, joblink, status, comments, published, authorId } = req.body;
             if (!companyname || !jobtitle || !joblink) {
                 res.status(400).json({ success: false, error: 'Company name, job title, and job link are required' });
@@ -77,10 +79,10 @@ const jobController = {
                     status: status || 'APPLIED',
                     comments: comments || null,
                     published: published || false,
-                    authorId: authorId ? parseInt(authorId) : null,
+                    authorId: authorId ? authorId : null,
                 },
-            });
-            res.status(201).json({ success: true, data: job });
+            }); */
+           // res.status(201).json({ success: true, data: job });
         } catch (error) {
             res.status(500).json({ success: false, error: error instanceof Error ? error.message : 'Unknown error' });
         }
@@ -99,8 +101,8 @@ const jobController = {
                     ...(joblink && { joblink }),
                     ...(status && { status }),
                     ...(comments && { comments }),
-                    ...(published !== undefined && { published }),
-                    updatedAt: new Date(),
+                    ...(published !== undefined && { published })
+                    // updatedAt is auto-managed by Prisma @updatedAt
                 },
             });
             res.json({ success: true, data: job });

@@ -19,8 +19,9 @@ import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppUploadRouteImport } from './routes/app/upload'
 import { Route as AppSettingsRouteImport } from './routes/app/settings'
 import { Route as AppNotesRouteImport } from './routes/app/notes'
-import { Route as AppJobsleadsRouteImport } from './routes/app/jobsleads'
+import { Route as AppJobleadsRouteImport } from './routes/app/jobleads'
 import { Route as AppInterviewsRouteImport } from './routes/app/interviews'
+import { Route as AppDocumentsRouteImport } from './routes/app/documents'
 import { Route as AppApplicationsRouteImport } from './routes/app/applications'
 import { Route as AppApplicationRouteImport } from './routes/app/application'
 import { Route as AppAddapplicationRouteImport } from './routes/app/addapplication'
@@ -75,14 +76,19 @@ const AppNotesRoute = AppNotesRouteImport.update({
   path: '/app/notes',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppJobsleadsRoute = AppJobsleadsRouteImport.update({
-  id: '/app/jobsleads',
-  path: '/app/jobsleads',
+const AppJobleadsRoute = AppJobleadsRouteImport.update({
+  id: '/app/jobleads',
+  path: '/app/jobleads',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppInterviewsRoute = AppInterviewsRouteImport.update({
   id: '/app/interviews',
   path: '/app/interviews',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppDocumentsRoute = AppDocumentsRouteImport.update({
+  id: '/app/documents',
+  path: '/app/documents',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppApplicationsRoute = AppApplicationsRouteImport.update({
@@ -111,8 +117,9 @@ export interface FileRoutesByFullPath {
   '/app/addapplication': typeof AppAddapplicationRoute
   '/app/application': typeof AppApplicationRoute
   '/app/applications': typeof AppApplicationsRoute
+  '/app/documents': typeof AppDocumentsRoute
   '/app/interviews': typeof AppInterviewsRoute
-  '/app/jobsleads': typeof AppJobsleadsRoute
+  '/app/jobleads': typeof AppJobleadsRoute
   '/app/notes': typeof AppNotesRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/upload': typeof AppUploadRoute
@@ -128,8 +135,9 @@ export interface FileRoutesByTo {
   '/app/addapplication': typeof AppAddapplicationRoute
   '/app/application': typeof AppApplicationRoute
   '/app/applications': typeof AppApplicationsRoute
+  '/app/documents': typeof AppDocumentsRoute
   '/app/interviews': typeof AppInterviewsRoute
-  '/app/jobsleads': typeof AppJobsleadsRoute
+  '/app/jobleads': typeof AppJobleadsRoute
   '/app/notes': typeof AppNotesRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/upload': typeof AppUploadRoute
@@ -146,8 +154,9 @@ export interface FileRoutesById {
   '/app/addapplication': typeof AppAddapplicationRoute
   '/app/application': typeof AppApplicationRoute
   '/app/applications': typeof AppApplicationsRoute
+  '/app/documents': typeof AppDocumentsRoute
   '/app/interviews': typeof AppInterviewsRoute
-  '/app/jobsleads': typeof AppJobsleadsRoute
+  '/app/jobleads': typeof AppJobleadsRoute
   '/app/notes': typeof AppNotesRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/upload': typeof AppUploadRoute
@@ -165,8 +174,9 @@ export interface FileRouteTypes {
     | '/app/addapplication'
     | '/app/application'
     | '/app/applications'
+    | '/app/documents'
     | '/app/interviews'
-    | '/app/jobsleads'
+    | '/app/jobleads'
     | '/app/notes'
     | '/app/settings'
     | '/app/upload'
@@ -182,8 +192,9 @@ export interface FileRouteTypes {
     | '/app/addapplication'
     | '/app/application'
     | '/app/applications'
+    | '/app/documents'
     | '/app/interviews'
-    | '/app/jobsleads'
+    | '/app/jobleads'
     | '/app/notes'
     | '/app/settings'
     | '/app/upload'
@@ -199,8 +210,9 @@ export interface FileRouteTypes {
     | '/app/addapplication'
     | '/app/application'
     | '/app/applications'
+    | '/app/documents'
     | '/app/interviews'
-    | '/app/jobsleads'
+    | '/app/jobleads'
     | '/app/notes'
     | '/app/settings'
     | '/app/upload'
@@ -217,8 +229,9 @@ export interface RootRouteChildren {
   AppAddapplicationRoute: typeof AppAddapplicationRoute
   AppApplicationRoute: typeof AppApplicationRoute
   AppApplicationsRoute: typeof AppApplicationsRoute
+  AppDocumentsRoute: typeof AppDocumentsRoute
   AppInterviewsRoute: typeof AppInterviewsRoute
-  AppJobsleadsRoute: typeof AppJobsleadsRoute
+  AppJobleadsRoute: typeof AppJobleadsRoute
   AppNotesRoute: typeof AppNotesRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppUploadRoute: typeof AppUploadRoute
@@ -297,11 +310,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNotesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/app/jobsleads': {
-      id: '/app/jobsleads'
-      path: '/app/jobsleads'
-      fullPath: '/app/jobsleads'
-      preLoaderRoute: typeof AppJobsleadsRouteImport
+    '/app/jobleads': {
+      id: '/app/jobleads'
+      path: '/app/jobleads'
+      fullPath: '/app/jobleads'
+      preLoaderRoute: typeof AppJobleadsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/interviews': {
@@ -309,6 +322,13 @@ declare module '@tanstack/react-router' {
       path: '/app/interviews'
       fullPath: '/app/interviews'
       preLoaderRoute: typeof AppInterviewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/documents': {
+      id: '/app/documents'
+      path: '/app/documents'
+      fullPath: '/app/documents'
+      preLoaderRoute: typeof AppDocumentsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/applications': {
@@ -345,8 +365,9 @@ const rootRouteChildren: RootRouteChildren = {
   AppAddapplicationRoute: AppAddapplicationRoute,
   AppApplicationRoute: AppApplicationRoute,
   AppApplicationsRoute: AppApplicationsRoute,
+  AppDocumentsRoute: AppDocumentsRoute,
   AppInterviewsRoute: AppInterviewsRoute,
-  AppJobsleadsRoute: AppJobsleadsRoute,
+  AppJobleadsRoute: AppJobleadsRoute,
   AppNotesRoute: AppNotesRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppUploadRoute: AppUploadRoute,

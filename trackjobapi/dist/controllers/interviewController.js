@@ -41,7 +41,7 @@ const interviewController = {
         try {
             const { userId } = req.params;
             const interviews = await prisma.interview.findMany({
-                where: { userId: parseInt(userId) },
+                where: { userId: userId },
                 include: {
                     user: true,
                     job: true,
@@ -81,7 +81,7 @@ const interviewController = {
             }
             const interview = await prisma.interview.create({
                 data: {
-                    userId: parseInt(userId),
+                    userId: userId,
                     jobId: jobId ? parseInt(jobId) : null,
                     interviewDate: new Date(interviewDate),
                     interviewType: interviewType || null,
@@ -110,8 +110,8 @@ const interviewController = {
                     ...(interviewer && { interviewer }),
                     ...(notes && { notes }),
                     ...(feedback && { feedback }),
-                    ...(status && { status }),
-                    updatedAt: new Date(),
+                    ...(status && { status })
+                    // updatedAt is auto-managed by Prisma @updatedAt
                 },
             });
             res.json({ success: true, data: interview });

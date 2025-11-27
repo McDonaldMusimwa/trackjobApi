@@ -1,8 +1,9 @@
 {
   "dependencies": {
+    "@aws-sdk/s3-request-presigner": "^3.940.0",
     "@tanstack/react-router": "^1.135.2"
   },
- "scripts": {
+  "scripts": {
     "client": "npm run dev --prefix client",
     "api": "npm run dev --prefix trackjobapi",
     "dev": "concurrently \"npm run client\" \"npm run api\""

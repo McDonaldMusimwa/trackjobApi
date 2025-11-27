@@ -3,6 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import PrivateLayout from '../../combonents/ui/PrivateLayout'
 import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useUser } from '@clerk/clerk-react'
 import type { Application } from '../../types/types'
 export const Route = createFileRoute('/app/applications')({
   component: RouteComponent,
@@ -10,6 +11,8 @@ export const Route = createFileRoute('/app/applications')({
 
 
 function RouteComponent() {
+  const { user } = useUser()
+
   const fetcher = async (url: string): Promise<Application[]> => {
     const res = await fetch(url)
     if (!res.ok) throw new Error('Network error')
@@ -18,8 +21,9 @@ function RouteComponent() {
   }
 
   const { data: applications = [], isLoading, error } = useQuery<Application[], Error>({
-    queryKey: ['applications'],
-    queryFn: () => fetcher('http://localhost:3000/applications/user/7'),
+    queryKey: ['applications', user?.id],
+    queryFn: () => fetcher(`http://localhost:3000/applications/user/${user?.id}`),
+    enabled: !!user?.id, // Only run query when user is loaded
   })
 
   const sorted = useMemo(() => {

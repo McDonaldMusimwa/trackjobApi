@@ -38,12 +38,13 @@ const applicationController = {
         }
     },
 
-    // Get applications by user
+    // Get applications by user (Clerk user ID)
     getApplicationsByUser: async (req: Request, res: Response) => {
         try {
             const { userId } = req.params;
+            
             const applications = await prisma.application.findMany({
-                where: { userId: parseInt(userId) },
+                where: { userId }, // Direct Clerk user ID
                 include: {
                     user: true,
                     job: true,
@@ -76,37 +77,34 @@ const applicationController = {
     // Create new application (accepts either jobId or nested job data)
     createApplication: async (req: Request, res: Response) => {
         try {
-            const { userId: bodyUserId, clerkUser, jobId: bodyJobId, job: jobObj, status, coverLetter, resume, notes } = req.body;
+            const { userId, clerkUser, jobId: bodyJobId, job: jobObj, status, appliedDate, coverLetter, resume, notes } = req.body;
 
-            // determine userId: prefer numeric body userId
-            let userId: number | null = bodyUserId ? parseInt(bodyUserId) : null;
-
-            // If clerkUser info provided (from frontend), try to find existing user by provider/providerId or create one
-            if (!userId && clerkUser && typeof clerkUser === 'object') {
-                const { provider = 'clerk', providerId, email, name, avatar } = clerkUser as any;
-                if (providerId) {
-                    let found = await prisma.user.findFirst({ where: { provider: provider, providerId: providerId } });
-                    if (!found && email) {
-                        // also try find by email if provider match not found
-                        found = await prisma.user.findUnique({ where: { email } });
-                    }
-                    if (!found) {
-                        const created = await prisma.user.create({ data: { email: email ?? `user+${providerId}@local`, name: name ?? null, provider, providerId, avatar: avatar ?? null, emailVerified: true } });
-                        userId = created.id;
-                    } else {
-                        userId = found.id;
-                    }
-                }
+            // Ensure userId is provided (Clerk user ID)
+            if (!userId) {
+                res.status(400).json({ success: false, error: 'userId (Clerk user ID) is required' });
+                return;
             }
 
-            // determine fallback to first user only if still not found
-            if (!userId) {
-                const firstUser = await prisma.user.findFirst();
-                if (!firstUser) {
-                    res.status(400).json({ success: false, error: 'No user found; provide userId or clerkUser' });
-                    return;
-                }
-                userId = firstUser.id;
+            // Ensure user exists in our database (upsert)
+            if (clerkUser && typeof clerkUser === 'object') {
+                const { email, name, avatar } = clerkUser as any;
+                
+                await prisma.user.upsert({
+                    where: { id: userId },
+                    update: {
+                        name: name || null,
+                        avatar: avatar || null,
+                        updatedAt: null
+                    },
+                    create: {
+                        id: userId, // Use Clerk's user ID
+                        email: email ?? `user+${userId}@local`,
+                        name: name || null,
+                        avatar: avatar || null,
+                        emailVerified: true,
+                        updatedAt: null
+                    }
+                });
             }
 
             // If jobId provided, create application directly
@@ -116,6 +114,7 @@ const applicationController = {
                         userId: userId,
                         jobId: parseInt(bodyJobId),
                         status: status || 'APPLIED',
+                        appliedDate: appliedDate ? new Date(appliedDate) : new Date(),
                         coverLetter: coverLetter || null,
                         resume: resume || null,
                         notes: notes || null,
@@ -128,9 +127,9 @@ const applicationController = {
 
             // If nested job object provided, create job then application in a transaction
             if (jobObj && typeof jobObj === 'object') {
-                const { companyname, jobtitle, joblink, comments, published } = jobObj as any;
-                if (!companyname || !jobtitle || !joblink) {
-                    res.status(400).json({ success: false, error: 'companyname, jobtitle and joblink are required when creating a job' });
+                const { companyname, jobtitle, joblink, comments, published, status: jobStatus } = jobObj as any;
+                if (!companyname || !jobtitle) {
+                    res.status(400).json({ success: false, error: 'companyname and jobtitle are required when creating a job' });
                     return;
                 }
 
@@ -139,9 +138,10 @@ const applicationController = {
                         data: {
                             companyname,
                             jobtitle,
-                            joblink,
+                            joblink: joblink || null,
                             comments: comments || null,
-                            published: published || false,
+                            published: published !== undefined ? published : true,
+                            status: jobStatus || status || 'APPLIED',
                             authorId: userId,
                         },
                     });
@@ -151,6 +151,7 @@ const applicationController = {
                             userId: userId,
                             jobId: newJob.id,
                             status: status || 'APPLIED',
+                            appliedDate: appliedDate ? new Date(appliedDate) : new Date(),
                             coverLetter: coverLetter || null,
                             resume: resume || null,
                             notes: notes || null,
@@ -175,16 +176,46 @@ const applicationController = {
     updateApplication: async (req: Request, res: Response) => {
         try {
             const { id } = req.params;
-            const { status, coverLetter, resume, notes } = req.body;
+            const { status, appliedDate, coverLetter, resume, notes, job: jobObj } = req.body;
+            
+            // If job object is provided, update the related job first
+            if (jobObj && typeof jobObj === 'object') {
+                const existingApp = await prisma.application.findUnique({
+                    where: { id: parseInt(id) },
+                    select: { jobId: true }
+                });
+
+                if (existingApp && existingApp.jobId) {
+                    const { companyname, jobtitle, joblink, comments, published, status: jobStatus } = jobObj as any;
+                    await prisma.job.update({
+                        where: { id: existingApp.jobId },
+                        data: {
+                            ...(companyname && { companyname }),
+                            ...(jobtitle && { jobtitle }),
+                            ...(joblink !== undefined && { joblink }),
+                            ...(comments !== undefined && { comments }),
+                            ...(published !== undefined && { published }),
+                            ...(jobStatus && { status: jobStatus })
+                            // updatedAt is auto-managed by Prisma @updatedAt
+                        }
+                    });
+                }
+            }
+
             const application = await prisma.application.update({
                 where: { id: parseInt(id) },
                 data: {
                     ...(status && { status }),
-                    ...(coverLetter && { coverLetter }),
-                    ...(resume && { resume }),
-                    ...(notes && { notes }),
-                    updatedAt: new Date(),
+                    ...(appliedDate && { appliedDate: new Date(appliedDate) }),
+                    ...(coverLetter !== undefined && { coverLetter }),
+                    ...(resume !== undefined && { resume }),
+                    ...(notes !== undefined && { notes })
+                    // updatedAt is auto-managed by Prisma @updatedAt
                 },
+                include: {
+                    user: true,
+                    job: true,
+                }
             });
             res.json({ success: true, data: application });
         } catch (error) {

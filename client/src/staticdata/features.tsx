@@ -1,7 +1,7 @@
 import type { FeatureCard } from "../types/types"
 import type { ROUTES } from "../types/types"
 import type { LOGGEDROUTES } from "../types/types"
-import {Calendar1,CircleGaugeIcon,FilePlus,FileTextIcon,NotebookPen,Settings} from 'lucide-react'
+import {Calendar1,CircleGaugeIcon,FilePlus,FileTextIcon,NotebookPen,Settings,FileText} from 'lucide-react'
 export const features: Array<FeatureCard> = [
   {
     title: 'Job Application Tracker',
@@ -56,7 +56,13 @@ export const features: Array<FeatureCard> = [
   
 ]
 
-
+/*
+    {
+    link:"/app/addapplication",
+    name:"Add Application",
+    icon:FilePlus,
+    id:5
+    }*/
 export const routes: ROUTES[] = [
         { link: "/", route: "Home" },
         { link: "/features", route: "Features" },
@@ -89,25 +95,25 @@ export const navlinks:Array<LOGGEDROUTES> =[
         name:"Interviews",
         icon:Calendar1,
         id:4
-    },
-   
-    {
-    link:"/app/addapplication",
-    name:"Add Application",
-    icon:FilePlus,
-    id:5
     }
+   
     ,{
     link:"/app/jobleads",
     name:"Job Leads",
     icon:FilePlus,
     id:6
     },
+    {
+    link:"/app/documents",
+    name:"Documents",
+    icon:FileText,
+    id:7
+    },
      {
         link:"/app/settings",
         name:"Settings",
         icon:Settings,
-    id:7
+    id:8
     },
 ]
 
