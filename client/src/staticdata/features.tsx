@@ -1,7 +1,7 @@
 import type { FeatureCard } from "../types/types"
 import type { ROUTES } from "../types/types"
 import type { LOGGEDROUTES } from "../types/types"
-import {Calendar1,CircleGaugeIcon,FilePlus,FileTextIcon,NotebookPen,Settings} from 'lucide-react'
+import {Calendar1,CircleGaugeIcon,FilePlus,FileTextIcon,NotebookPen,Settings,FileText} from 'lucide-react'
 export const features: Array<FeatureCard> = [
   {
     title: 'Job Application Tracker',
@@ -56,7 +56,13 @@ export const features: Array<FeatureCard> = [
   
 ]
 
-
+/*
+    {
+    link:"/app/addapplication",
+    name:"Add Application",
+    icon:FilePlus,
+    id:5
+    }*/
 export const routes: ROUTES[] = [
         { link: "/", route: "Home" },
         { link: "/features", route: "Features" },
@@ -89,24 +95,33 @@ export const navlinks:Array<LOGGEDROUTES> =[
         name:"Interviews",
         icon:Calendar1,
         id:4
-    },
-   
-    {
-        link:"app/addapplication",
-        name:"Add App",
-        icon:FilePlus,
-        id:6
     }
+   
     ,{
-        link:"app/jobleads",
-        name:"Job Leads",
-        icon:FilePlus,
-        id:6
+    link:"/app/jobleads",
+    name:"Job Leads",
+    icon:FilePlus,
+    id:6
+    },
+    {
+    link:"/app/documents",
+    name:"Documents",
+    icon:FileText,
+    id:7
     },
      {
         link:"/app/settings",
         name:"Settings",
         icon:Settings,
-        id:5
+    id:8
     },
+]
+
+export const CATEGORIES = [
+  { value: 'job-search', label: 'Job Search', color: 'bg-blue-100 text-blue-800' },
+  { value: 'interview-prep', label: 'Interview Prep', color: 'bg-purple-100 text-purple-800' },
+  { value: 'networking', label: 'Networking', color: 'bg-green-100 text-green-800' },
+  { value: 'skills', label: 'Skills & Learning', color: 'bg-orange-100 text-orange-800' },
+  { value: 'reflection', label: 'Reflection', color: 'bg-pink-100 text-pink-800' },
+  { value: 'other', label: 'Other', color: 'bg-gray-100 text-gray-800' },
 ]

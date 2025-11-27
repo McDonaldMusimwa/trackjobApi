@@ -43,7 +43,7 @@ const noteController = {
         try {
             const { userId } = req.params;
             const notes = await prisma.note.findMany({
-                where: { userId: parseInt(userId) },
+                where: { userId: userId },
                 include: {
                     user: true,
                     job: true,
@@ -84,7 +84,7 @@ const noteController = {
             }
             const note = await prisma.note.create({
                 data: {
-                    userId: parseInt(userId),
+                    userId: userId,
                     jobId: jobId ? parseInt(jobId) : null,
                     title,
                     content,
@@ -105,8 +105,8 @@ const noteController = {
                 where: { id: parseInt(id) },
                 data: {
                     ...(title && { title }),
-                    ...(content && { content }),
-                    updatedAt: new Date(),
+                    ...(content && { content })
+                    // updatedAt is auto-managed by Prisma @updatedAt
                 },
             });
             res.json({ success: true, data: note });

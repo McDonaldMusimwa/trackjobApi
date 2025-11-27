@@ -77,8 +77,6 @@ export interface Application {
   id: number
   userId: number
   jobId: number
-  title:string
-  company: string
   appliedDate: string
   status: JobStatus
   coverLetter?: string | null
@@ -108,15 +106,17 @@ export interface Interview {
   job?: Job | null
 }
 
+export type NoteCategory = 'job-search' | 'interview-prep' | 'networking' | 'skills' | 'reflection' | 'other'
+
 export interface Note {
   id: number
   userId: number
   jobId?: number | null
   title: string
   content: string
+  category: NoteCategory
   createdAt: string
   updatedAt: string
-
   user?: User
   job?: Job | null
 }

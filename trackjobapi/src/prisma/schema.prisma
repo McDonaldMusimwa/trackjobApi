@@ -17,15 +17,11 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
 }
 model User {
-  id            Int       @id @default(autoincrement())
+  id            String    @id // Clerk user ID
   email         String    @unique
   name          String?
-  password      String?   
-  provider      String?   
-  providerId    String?   
   avatar        String?
   emailVerified Boolean   @default(false)
 
@@ -34,15 +30,16 @@ model User {
   applications  Application[]
   interviews    Interview[]
   notes         Note[]
+  documents     Document[]
   createdAt     DateTime  @default(now())
-  updatedAt     DateTime?  @updatedAt
+  updatedAt     DateTime? @updatedAt
 }
 
 model Profile {
-  id     Int   @id @default(autoincrement())
+  id     Int    @id @default(autoincrement())
   bio    String?
-  user   User  @relation(fields: [userId], references: [id])
-  userId Int   @unique
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
 }
 
 enum JobStatus {
@@ -61,12 +58,12 @@ model Job {
   companyname String
   status      JobStatus @default(APPLIED)
   jobtitle    String
-  joblink     String
+  joblink     String?  // Make optional since not all jobs have a link
   comments    String?
   published   Boolean  @default(false)
 
   author       User?       @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId     Int?
+  authorId     String?     // Clerk user ID
   applications Application[]
   interviews   Interview[]
   notes        Note[]
@@ -75,7 +72,7 @@ model Job {
 model Application {
   id            Int       @id @default(autoincrement())
   user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId        Int
+  userId        String    // Clerk user ID
   job           Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
   jobId         Int
   appliedDate   DateTime  @default(now())
@@ -90,7 +87,7 @@ model Application {
 model Interview {
   id            Int       @id @default(autoincrement())
   user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId        Int
+  userId        String    // Clerk user ID
   job           Job?      @relation(fields: [jobId], references: [id], onDelete: Cascade)
   jobId         Int?
   interviewDate DateTime
@@ -103,14 +100,43 @@ model Interview {
   updatedAt     DateTime  @updatedAt
 }
 
+enum NoteCategory {
+  JOB_SEARCH
+  INTERVIEW_PREP
+  NETWORKING
+  SKILLS
+  REFLECTION
+  OTHER
+}
+
 model Note {
-  id            Int       @id @default(autoincrement())
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId        Int
-  job           Job?      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  id            Int          @id @default(autoincrement())
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String       // Clerk user ID
+  job           Job?         @relation(fields: [jobId], references: [id], onDelete: Cascade)
   jobId         Int?
   title         String
   content       String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  category      NoteCategory @default(OTHER)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+enum DocumentType {
+  resume
+  coverLetter
+}
+
+model Document {
+  id          Int          @id @default(autoincrement())
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String       // Clerk user ID
+  name        String       // Original file name
+  type        DocumentType // resume or coverLetter
+  url         String       // Public URL to access the file
+  s3Key       String       // S3 object key for deletion
+  size        Int          // File size in bytes
+  uploadedAt  DateTime     @default(now())
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
